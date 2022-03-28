@@ -5,6 +5,7 @@ class Node:
         self.visited = False
         self.senses = {}
         self.occupant = None # One of Agent, Wumpus, Portal, Coin, Wall
+        self.is_safe = False
 
     def get_symbols_to_print(self):
         symbols = ['.'] * 9
@@ -32,6 +33,19 @@ class Node:
                 symbols[4] = ">"
             else:
                 symbols[4] = "<"
+        elif self.occupant == "wumpus":
+            symbols[4] = "W"
+        elif self.occupant == "portal":
+            symbols[4] = "O"
+        elif self.occupant == "coin":
+            symbols[4] = "C"
+        elif self.occupant == "wall":
+            symbols[4] = "X"
+        elif self.is_safe:
+            if self.is_visited:
+                symbols[4] = 'S'
+            else:
+                symbols[4] = 's'
         else:
             symbols[4] = "?"
 
