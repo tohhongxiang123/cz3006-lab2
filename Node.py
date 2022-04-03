@@ -7,6 +7,32 @@ class Node:
         self.occupant = None # One of Agent, Wumpus, Portal, Coin, Wall
         self.is_safe = False
 
+    def stringify_senses(self):
+        senses = []
+        #confounded, stench, tingle, glitter, bump, scream
+
+        senses.append('true' if 'confounded' in self.senses else 'false')
+        senses.append('true' if 'stench' in self.senses else 'false')
+        senses.append('true' if 'tingle' in self.senses else 'false')
+        senses.append('true' if 'glitter' in self.senses else 'false')
+        senses.append('true' if 'bump' in self.senses else 'false')
+        senses.append('true' if 'scream' in self.senses else 'false')
+
+        return "[" + ",".join(senses) + "]"
+
+    def print_out_senses(self):
+        senses = []
+        #confounded, stench, tingle, glitter, bump, scream
+
+        senses.append('confounded' if 'confounded' in self.senses else 'c')
+        senses.append('stench' if 'stench' in self.senses else 's')
+        senses.append('tingle' if 'tingle' in self.senses else 't')
+        senses.append('glitter' if 'glitter' in self.senses else 'g')
+        senses.append('bump' if 'bump' in self.senses else 'b')
+        senses.append('scream' if 'scream' in self.senses else 's')
+
+        return "[" + "-".join(senses) + "]"
+
     def get_symbols_to_print(self):
         symbols = ['.'] * 9
 
