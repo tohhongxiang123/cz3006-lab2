@@ -2,9 +2,9 @@ from Senses import Senses
 
 class Node:
     def __init__(self):
-        self.visited = False
+        self.is_visited = False
         self.senses = {}
-        self.occupant = None # One of Agent, Wumpus, Portal, Coin, Wall
+        self.occupant = None # One of Agent, wumpus, portal, coin, wall, unknown
         self.is_safe = False
 
     def stringify_senses(self):
@@ -20,7 +20,7 @@ class Node:
 
         return "[" + ",".join(senses) + "]"
 
-    def print_out_senses(self):
+    def format_senses_to_print(self):
         senses = []
         #confounded, stench, tingle, glitter, bump, scream
 
@@ -65,13 +65,13 @@ class Node:
             symbols[4] = "O"
         elif self.occupant == "coin":
             symbols[4] = "C"
-        elif self.occupant == "wall":
-            symbols[4] = "X"
         elif self.is_safe:
             if self.is_visited:
                 symbols[4] = 'S'
             else:
                 symbols[4] = 's'
+        elif self.occupant == "unknown":
+                symbols[4] = 'U'
         else:
             symbols[4] = "?"
 
@@ -88,6 +88,9 @@ class Node:
         
         if 'scream' in self.senses:
             symbols[8] = '@' # Transitory
+
+        if self.occupant == 'wall':
+            symbols = ['#' for s in symbols]
 
         return symbols
         
