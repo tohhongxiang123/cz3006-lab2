@@ -11,12 +11,12 @@ class Node:
         senses = []
         #confounded, stench, tingle, glitter, bump, scream
 
-        senses.append('true' if 'confounded' in self.senses else 'false')
-        senses.append('true' if 'stench' in self.senses else 'false')
-        senses.append('true' if 'tingle' in self.senses else 'false')
-        senses.append('true' if 'glitter' in self.senses else 'false')
-        senses.append('true' if 'bump' in self.senses else 'false')
-        senses.append('true' if 'scream' in self.senses else 'false')
+        senses.append('on' if 'confounded' in self.senses else 'off')
+        senses.append('on' if 'stench' in self.senses else 'off')
+        senses.append('on' if 'tingle' in self.senses else 'off')
+        senses.append('on' if 'glitter' in self.senses else 'off')
+        senses.append('on' if 'bump' in self.senses else 'off')
+        senses.append('on' if 'scream' in self.senses else 'off')
 
         return "[" + ",".join(senses) + "]"
 

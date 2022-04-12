@@ -28,8 +28,8 @@ class World:
         self.world = []
         
         self.db = Prolog()
-        self.db.consult('db.pl')
-        # self.db.consult('U2022912F_Agent.pl')
+        # self.db.consult('db.pl')
+        self.db.consult('U2022912F_Agent.pl')
 
         self.starting_arguments = locals()
         self.starting_arguments.pop("self", None) # Remove unrequired arguments
@@ -110,6 +110,8 @@ class World:
         if 'scream' in current_node.senses:
             self.db.assertz(f'scream({agent_relative_position["X"]},{agent_relative_position["Y"]})')
         
+        list(self.db.query("reborn"))
+
     def update_agent(self, action):
         """
         Given an action, update the agent
@@ -202,7 +204,6 @@ class World:
         # Update bump indicator
         if (new_x, new_y) in self.walls:
             self.world[new_y][new_x].occupant = "wall"
-            # TODO include assertz(wall(X, Y))
 
             self.world[self.agent.position[1]][self.agent.position[0]].senses['bump'] = True
             updated_senses = self.world[self.agent.position[1]][self.agent.position[0]].stringify_senses()
@@ -363,11 +364,11 @@ class World:
         relative_travelled_coordinates = set([(x - self.agent_original_position[0], y - self.agent_original_position[1]) for x, y in self.agent_visited_locations])
         max_x = max([abs(c[0]) for c in relative_travelled_coordinates]) + 2
         max_y = max([abs(c[1]) for c in relative_travelled_coordinates]) + 2
-        max_coord = max(max_x, max_y)
+        # max_coord = max(max_x, max_y)
 
-        for y in range(-max_coord + 1, max_coord):
+        for y in range(-max_y + 1, max_y):
             row = []
-            for x in range(-max_coord + 1, max_coord):
+            for x in range(-max_x + 1, max_x):
                 absolute_x = x + self.agent_original_position[0]
                 absolute_y = y + self.agent_original_position[1]
                 if absolute_x < 0 or absolute_x > self.size[0] - 1 or absolute_y < 0 or absolute_y > self.size[1] - 1:
@@ -429,14 +430,15 @@ if __name__ == "__main__":
     # w = World(agent_original_position=(1, 1), agent_original_orientation='east', wumpus_positions=[(2,1)], coin_positions=[], portal_positions=[(5,1)])
     # w = World(agent_original_position=(1, 2), agent_original_orientation='east', wumpus_positions=[(2,1)], coin_positions=[(3, 1)], portal_positions=[(5,1)])
     # w = World(agent_original_position=(1, 1), agent_original_orientation='south', wumpus_positions=[(2, 2)], coin_positions=[(3, 1), (3, 3)], portal_positions=[(5,1)])
-    w = World(agent_original_position=(1, 1), agent_original_orientation='south', wumpus_positions=[(2, 2)], coin_positions=[(4, 2)], portal_positions=[(5,1)])
+    # w = World(agent_original_position=(1, 1), agent_original_orientation='south', wumpus_positions=[(2, 2)], coin_positions=[(4, 2)], portal_positions=[(5,1)])
     # w = World(agent_original_position=(1, 1), agent_original_orientation='south', wumpus_positions=[], coin_positions=[(5, 2)], portal_positions=[(3,1), (3, 3), (3, 5)])
     # w = World(agent_original_position=(1, 1), agent_original_orientation='south', wumpus_positions=[(6,6)], coin_positions=[(6, 5)], portal_positions=[(3,1), (3, 3), (3, 5)], world_size=(10,10))
     # w = World(agent_original_position=(3, 4), agent_original_orientation='south', wumpus_positions=[(2, 5)], coin_positions=[(8,8), (3, 3)], portal_positions=[(5, 3), (1, 7), (6, 8)], world_size=(10,10))
     # w = World(agent_original_position=(3, 2), agent_original_orientation='west', wumpus_positions=[(1, 3)], coin_positions=[(1, 2)], portal_positions=[(1, 1)], world_size=(5,5))
     # w = World(agent_original_position=(3, 4), agent_original_orientation='east', wumpus_positions=[(6,4)], coin_positions=[(8,8)], portal_positions=[(5, 3), (1, 7), (6, 8)], world_size=(10,10))
     # w = World(agent_original_position=(3, 4), agent_original_orientation='east', wumpus_positions=[(6,4)], coin_positions=[(8,8)], portal_positions=[(5, 3), (1, 7)], wall_positions=[(7,7), (8,7), (4, 4)], world_size=(10,10))
-    # w = World(agent_original_position=(3, 4), agent_original_orientation='east', wumpus_positions=[(6,4)], coin_positions=[(8,8), (3,2)], portal_positions=[(5, 3), (1, 7)], wall_positions=[(7,7), (8,7), (4, 4), (2, 2), (2, 3), (3, 3), (4, 3), (4, 2), (7, 4)], world_size=(10,10))
+    w = World(agent_original_position=(3, 4), agent_original_orientation='east', wumpus_positions=[(6,4)], coin_positions=[(8,8), (3,2)], portal_positions=[(5, 3), (1, 7)], wall_positions=[(7,7), (8,7), (4, 4), (2, 2), (2, 3), (3, 3), (4, 3), (4, 2), (7, 4), (3, 5)], world_size=(10,10))
+    # w = World(agent_original_position=(1, 4), agent_original_orientation='north', wumpus_positions=[(3,4)], coin_positions=[(1,3)], portal_positions=[(3, 2), (3, 1), (1, 1)], world_size=(7, 6))
     
     print("=== INITIAL WORLD ===")
     w.display_initial_world()
@@ -449,13 +451,4 @@ if __name__ == "__main__":
         w.update_agent(next_move)
         print(next_move)
         w.display_relative_world()
-        # print("Safes", list(w.db.query("safe(X, Y)")))
-        # print("Wals", list(w.db.query("wall(X,Y)")))
         input()
-
-        # next_moves = w.get_next_move()
-        # for next_move in next_moves:
-        #     w.update_agent(next_move)
-        #     print(next_move)
-        #     w.display_relative_world()
-        #     input()

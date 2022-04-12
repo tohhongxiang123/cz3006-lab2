@@ -10,8 +10,10 @@ if __name__ == "__main__":
 
     for i in range(3):
         w.update_agent("moveforward")
+        print("moveforward")
         w.display_relative_world()
 
+        # To show the knowledge that the agent possesses
         safe_positions = set([(a['X'], a['Y']) for a in list(w.db.query("safe(X,Y)"))])
         print("Safe positions", safe_positions)
 

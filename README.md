@@ -15,7 +15,7 @@ pip install pyswip
 # Running file
 
 ```
-python World.py
+python U2022912F_Driver.py
 ```
 
 Press `enter` to proceed to the next move
