@@ -4,6 +4,7 @@ from Node import Node
 from random import choice
 from pyswip import Prolog
 import sys
+from time import sleep
 
 def rotate(arr, number_of_90_degree_clockwise_rotations):
     """
@@ -29,7 +30,7 @@ class World:
         
         self.db = Prolog()
         # self.db.consult('db.pl')
-        self.db.consult('U2022912F_Agent.pl')
+        self.db.consult('U2022912F-Agent.pl')
 
         self.starting_arguments = locals()
         self.starting_arguments.pop("self", None) # Remove unrequired arguments
@@ -110,7 +111,7 @@ class World:
         if 'scream' in current_node.senses:
             self.db.assertz(f'scream({agent_relative_position["X"]},{agent_relative_position["Y"]})')
         
-        list(self.db.query("reborn"))
+        list(self.db.query(f"reposition({self.world[self.agent.position[1]][self.agent.position[0]].stringify_senses()})"))
 
     def update_agent(self, action):
         """
@@ -324,6 +325,28 @@ class World:
                 row.append(n)
             world.append(row)
 
+        neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        for y in range(self.size[1]):
+            for x in range(self.size[0]):
+                if (x, y) in self.wumpus:
+                    for neighbor in neighbors:
+                        nx = x + neighbor[0]
+                        ny = y + neighbor[1]
+                        if nx < 0 or nx >= self.world_size[0] or ny < 0 or ny >= self.world_size[1]:
+                            continue
+                        world[ny][nx].senses['stench'] = True
+                elif (x, y) in self.coin:
+                    world[y][x].senses['glitter'] = True
+                elif (x, y) in self.portals:
+                    for neighbor in neighbors:
+                        nx = x + neighbor[0]
+                        ny = y + neighbor[1]
+                        if nx < 0 or nx >= self.world_size[0] or ny < 0 or ny >= self.world_size[1]:
+                            continue
+                        world[ny][nx].senses['tingle'] = True
+                elif (x, y) == self.agent_original_position:
+                    world[y][x].senses['confounded'] = True
+
         world = world[::-1]
 
         for row in world:
@@ -438,6 +461,7 @@ if __name__ == "__main__":
     # w = World(agent_original_position=(3, 4), agent_original_orientation='east', wumpus_positions=[(6,4)], coin_positions=[(8,8)], portal_positions=[(5, 3), (1, 7), (6, 8)], world_size=(10,10))
     # w = World(agent_original_position=(3, 4), agent_original_orientation='east', wumpus_positions=[(6,4)], coin_positions=[(8,8)], portal_positions=[(5, 3), (1, 7)], wall_positions=[(7,7), (8,7), (4, 4)], world_size=(10,10))
     w = World(agent_original_position=(3, 4), agent_original_orientation='east', wumpus_positions=[(6,4)], coin_positions=[(8,8), (3,2)], portal_positions=[(5, 3), (1, 7)], wall_positions=[(7,7), (8,7), (4, 4), (2, 2), (2, 3), (3, 3), (4, 3), (4, 2), (7, 4), (3, 5)], world_size=(10,10))
+    # w = World(agent_original_position=(3, 4), agent_original_orientation='south', wumpus_positions=[(2,3)], coin_positions=[(1, 5)], portal_positions=[(4, 1), (4, 3), (4, 5)], wall_positions=[(1, 1), (1, 2), (1, 3)], world_size=(8,7))
     # w = World(agent_original_position=(1, 4), agent_original_orientation='north', wumpus_positions=[(3,4)], coin_positions=[(1,3)], portal_positions=[(3, 2), (3, 1), (1, 1)], world_size=(7, 6))
     # w = World(agent_original_position=(1, 4), agent_original_orientation='north', wumpus_positions=[(3,4)], coin_positions=[(3,5)], wall_positions=[(2, 3), (2, 4), (2, 5), (2, 6), (3, 6), (4, 6), (4, 5), (4, 4), (4, 3)], portal_positions=[], world_size=(8,8))
     
@@ -459,4 +483,5 @@ if __name__ == "__main__":
             w.update_agent(next_move)
             print(next_move)
             w.display_relative_world()
-            input()
+            sleep(0.1)
+            # input()

@@ -1,4 +1,4 @@
-from U2022912F_Driver import World
+from World import World
 
 if __name__ == "__main__":
     w = World(agent_original_position=(1, 1), agent_original_orientation='east', wumpus_positions=[], coin_positions=[(4, 1)], portal_positions=[], world_size=(7, 3))

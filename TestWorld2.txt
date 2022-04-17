@@ -7,10 +7,10 @@
 # # #  . . .  . . .  . . .  . . .  . . .  # # #  
 # # #    ?      ?      ?      ?      ?    # # #  
 # # #  . . .  . . .  . . .  . . .  . . .  # # #  
-# # #  . . .  . . .  . . .  . . .  . . .  # # #  
+# # #  . . .  . . .  . . .  . . T  . . .  # # #  
 # # #    ?      ?      ?      ?      ?    # # #  
 # # #  . . .  . . .  . . .  . . .  . . .  # # #  
-# # #  . . .  . . .  . . .  . . .  . . .  # # #  
+# # #  % . .  . . .  . . T  . . .  . . T  # # #  
 # # #  - > -    ?      ?    - O -    ?    # # #  
 # # #  . . .  . . .  . . .  . . .  . . .  # # #  
 # # #  # # #  # # #  # # #  # # #  # # #  # # #  
@@ -36,7 +36,7 @@ moveforward
 . . .  . . .  . . .  
 
 Safe positions {(0, 1), (0, 0), (-1, 1), (1, 1), (-1, 0), (0, 2), (1, 0), (0, -1)}
-Relative position: (0, 1, 'north') Actual position: (2, 1, 'east')
+Relative position: (0, 1, 'rnorth') Actual position: (2, 1, 'east')
 moveforward
 [c-s-tingle-g-b-s]
 . . .  . . .  . . .  
@@ -62,7 +62,7 @@ moveforward
 . . .  . . .  . . .  
 
 Safe positions {(0, 1), (0, 0), (-1, 1), (1, 1), (-1, 0), (0, 2), (1, 0), (0, -1)}
-Relative position: (0, 2, 'north') Actual position: (3, 1, 'east')
+Relative position: (0, 2, 'rnorth') Actual position: (3, 1, 'east')
 moveforward
 [confounded-s-t-g-b-s]
 . . .  . . .  . . .  
@@ -76,4 +76,4 @@ moveforward
 . . .  . . .  . . .  
 
 Safe positions {(0, 1), (0, 0), (-1, 0), (1, 0), (0, -1)}
-Relative position: (0, 0, 'north') Actual position: (1, 1, 'north')
+Relative position: (0, 0, 'rnorth') Actual position: (2, 1, 'south')

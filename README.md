@@ -12,11 +12,15 @@ venv\Scripts\activate
 pip install pyswip
 ```
 
+# Information
+
+- `U2022912F-Agent.pl` is the prolog implementation of the agent
+- `U2022912F-Driver.py` is the python driver. Run `python U2022912F-Driver.py` to check output
+- `AlphaBlur-Friend-Driver.py` is the friend driver file
+
 # Running file
 
 ```
-python U2022912F_Driver.py
+python U2022912F-Driver.py
 ```
-
-Press `enter` to proceed to the next move
 

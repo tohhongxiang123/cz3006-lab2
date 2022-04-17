@@ -1,4 +1,4 @@
-from U2022912F_Driver import World
+from World import World
 
 """
 This file shows that the agent loses memory after walking through the portal
