@@ -90,37 +90,52 @@ adjacent(Xa, Ya, X, Y) :-
 
 wumpus(X, Y) :-
     definitely_wumpus(X, Y), !.
+
 wumpus(X, Y) :-
-    stench(Xs, Ys), adjacent(Xs, Ys, X, Y), \+visited(X, Y), \+safe(X, Y).
+    maybe_wumpus(X, Y).
+
+maybe_wumpus(X, Y) :-
+    stench(Xs, Ys), adjacent(Xs, Ys, X, Y), \+safe(X, Y).
     
 /* Returns whether the wumpus is definitely at X,Y */
 definitely_wumpus(X, Y) :-
     stench(X1, Y1),
     stench(X2, Y2),
     X1 > X2, Y1 > Y2,
-    safe(X2, Y1),
+    safe(X2, Y1), !,
     X is X1, Y is Y2.
 
 definitely_wumpus(X, Y) :-
     stench(X1, Y1),
     stench(X2, Y2),
     X1 > X2, Y1 > Y2,
-    safe(X1, Y2),
+    safe(X1, Y2), !,
     X is X2, Y is Y1.
 
 definitely_wumpus(X, Y) :-
     stench(X1, Y1),
     stench(X2, Y2),
     X1 < X2, Y1 > Y2,
-    safe(X2, Y1),
+    safe(X2, Y1), !,
     X is X1, Y is Y2.
 
 definitely_wumpus(X, Y) :-
     stench(X1, Y1),
     stench(X2, Y2),
     X1 < X2, Y1 > Y2,
-    safe(X1, Y2),
+    safe(X1, Y2), !,
     X is X2, Y is Y1.
+
+definitely_wumpus(X, Y) :-
+    maybe_wumpus(X, Y),
+    FRx is X+1, FRy is Y+1,
+    \+maybe_wumpus(FRx, FRy),
+    FLx is X-1, FLy is Y+1,
+    \+maybe_wumpus(FLx, FLy),
+    BLx is X - 1, BLy is Y-1,
+    \+maybe_wumpus(BLx, BLy),
+    BRx is X+1, BRy is Y-1,
+    \+maybe_wumpus(BRx, BRy).
 
 /* Return whether a confundus portal is possibly at X,Y */
 :- dynamic(confundus/2).

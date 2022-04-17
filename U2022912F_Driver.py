@@ -439,6 +439,7 @@ if __name__ == "__main__":
     # w = World(agent_original_position=(3, 4), agent_original_orientation='east', wumpus_positions=[(6,4)], coin_positions=[(8,8)], portal_positions=[(5, 3), (1, 7)], wall_positions=[(7,7), (8,7), (4, 4)], world_size=(10,10))
     w = World(agent_original_position=(3, 4), agent_original_orientation='east', wumpus_positions=[(6,4)], coin_positions=[(8,8), (3,2)], portal_positions=[(5, 3), (1, 7)], wall_positions=[(7,7), (8,7), (4, 4), (2, 2), (2, 3), (3, 3), (4, 3), (4, 2), (7, 4), (3, 5)], world_size=(10,10))
     # w = World(agent_original_position=(1, 4), agent_original_orientation='north', wumpus_positions=[(3,4)], coin_positions=[(1,3)], portal_positions=[(3, 2), (3, 1), (1, 1)], world_size=(7, 6))
+    # w = World(agent_original_position=(1, 4), agent_original_orientation='north', wumpus_positions=[(3,4)], coin_positions=[(3,5)], wall_positions=[(2, 3), (2, 4), (2, 5), (2, 6), (3, 6), (4, 6), (4, 5), (4, 4), (4, 3)], portal_positions=[], world_size=(8,8))
     
     print("=== INITIAL WORLD ===")
     w.display_initial_world()
@@ -447,8 +448,15 @@ if __name__ == "__main__":
     w.display_relative_world()
 
     while True:
-        next_move = w.get_next_move()[0]
-        w.update_agent(next_move)
-        print(next_move)
-        w.display_relative_world()
-        input()
+        # next_move = w.get_next_move()[0]
+        # w.update_agent(next_move)
+        # print(next_move)
+        # w.display_relative_world()
+        # input()
+
+        next_moves = w.get_next_move()
+        for next_move in next_moves:
+            w.update_agent(next_move)
+            print(next_move)
+            w.display_relative_world()
+            input()
