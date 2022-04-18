@@ -16,7 +16,7 @@ pip install pyswip
 
 - `U2022912F-Agent.pl` is the prolog implementation of the agent
 - `U2022912F-Driver.py` is the python driver. Run `python U2022912F-Driver.py` to check output
-- `AlphaBlur-Friend-Driver.py` is the friend driver file
+- `U2022912F-Friend-Driver.py` is the friend driver file
 
 # Running file
 
